@@ -10,22 +10,12 @@ import (
 	"path/filepath"
 )
 
-type Handler struct {
-	http.Handler
-}
-
-type RequestHandler struct {
+type _RequestHandler struct {
 	writer http.ResponseWriter
 	request http.Request
 }
 
-func (Handler) _ServeHTTP(w http.ResponseWriter, request *http.Request ) {
-
-	reqHandler := RequestHandler{w, *request};
-	reqHandler.Handle();
-}
-
-func (handler RequestHandler) Handle() {
+func (handler _RequestHandler) Handle() {
 	resourceName := handler.request.RequestURI;
 
 	log.Println("Request: " + resourceName);
@@ -66,7 +56,7 @@ func (handler RequestHandler) Handle() {
 	fmt.Fprint(handler.writer, content);
 }
 
-func (handler RequestHandler) Reply(code int, s string) {
+func (handler _RequestHandler) Reply(code int, s string) {
 	handler.writer.WriteHeader(code);
 	fmt.Fprint(handler.writer, s);
 }
