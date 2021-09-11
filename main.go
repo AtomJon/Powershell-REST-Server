@@ -9,7 +9,7 @@ import (
 
 func main() {
 	log.Println("Starting listener");
-	
+
 	_handler := handler.SubScriptHandler{};
 	
 	err := http.ListenAndServe(":8000", _handler);
