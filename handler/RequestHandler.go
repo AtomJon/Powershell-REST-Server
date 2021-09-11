@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"reflect"
 )
 
 type FindResourceFunc func (string) ([]byte, error)
@@ -25,7 +25,7 @@ func (handler _RequestHandler) Handle() {
 	if (err != nil) {
 		log.Printf("Error: %v\n", err);
 
-		if (errors.Is(err, _ResourceNotFoundError{})) {
+		if (reflect.TypeOf(err) == reflect.TypeOf(_ResourceNotFoundError{})) {
 			handler.Reply(404, "Cannot find resource");
 		} else {
 			handler.Reply(500, "Resource could not be read");

@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -57,6 +56,5 @@ func _FindResource(resourceName string) ([]byte, error) {
 }
 
 func _ReturnErrorWithString(format string, a ...interface{}) ([]byte, error) {
-	log.Printf(format, a...);
 	return nil, fmt.Errorf(format, a...);
 }
