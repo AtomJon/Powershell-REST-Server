@@ -4,19 +4,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"reflect"
 )
 
-type FindResourceFunc func (string) ([]byte, error)
+type FindResourceFunc func (string) (Resource, error)
+type ExecuteContentFunc func (Resource) (error, string)
 
-type _RequestHandler struct {
+type RequestHandler struct {
 	writer http.ResponseWriter
 	request http.Request
 
 	findResource FindResourceFunc
+	executeConent ExecuteContentFunc
 }
 
-func (handler _RequestHandler) Handle() {
+func (handler RequestHandler) Handle() {
 	resourceName := handler.request.RequestURI;
 
 	log.Println("Request: " + resourceName);
@@ -25,17 +26,26 @@ func (handler _RequestHandler) Handle() {
 	if (err != nil) {
 		log.Printf("Error: %v\n", err);
 
-		if (reflect.TypeOf(err) == reflect.TypeOf(_ResourceNotFoundError{})) {
-			handler.Reply(404, "Cannot find resource");
-		} else {
+		switch err.(type) {
+
+		case ResourceNotFoundError:
+			handler.Reply(404, err.Error());
+
+		case ResourceNotUniqueError:
+			handler.Reply(406, err.Error());
+
+		default:
 			handler.Reply(500, "Resource could not be read");
+
 		}
+
 	} else {
-		handler.Reply(200, string(content));
+		handler.executeConent(content);
+		// handler.Reply(200, string(content));
 	}
 }
 
-func (handler _RequestHandler) Reply(code int, s string) {
+func (handler RequestHandler) Reply(code int, s string) {
 	handler.writer.WriteHeader(code);
 	fmt.Fprint(handler.writer, s);
 }
