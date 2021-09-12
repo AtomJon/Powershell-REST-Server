@@ -5,16 +5,18 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/mattn/go-zglob"
 )
 
 func FindResource(resourceName string) (Resource, error) {
-	resourcePath := filepath.Join("./routes/*/", resourceName)
+	resourcePath := "./routes/**/" + resourceName[1:]
 
 	if len(filepath.Ext(resourcePath)) < 1 {
 		resourcePath += ".*"
 	}
 
-	matches, err := filepath.Glob(resourcePath)
+	matches, err := zglob.Glob(resourcePath)
 	if err != nil {
 		return _ReturnErrorWithString("invalid pattern '%s':\n%e\n", resourcePath, err)
 	}
