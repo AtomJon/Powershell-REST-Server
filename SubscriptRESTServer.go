@@ -29,7 +29,7 @@ func StartServer() {
 
 	_handler := handler.SubScriptHandler{};
 	
-	err = http.ListenAndServe(":8000", _handler);
+	err = http.ListenAndServe(":3000", _handler);
 	if (err == nil) {
 		log.Fatal(err);
 	}
