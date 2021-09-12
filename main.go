@@ -12,9 +12,7 @@ import (
 )
 
 func main() {
-	dateString := time.Now().Local().Format("2006/01/02")
-	log.Println(dateString);
-	os.Exit(0)
+	dateString := time.Now().Local().Format("2006-01-02")
 
 	os.Mkdir("log", os.ModeDir);
 	logPath := path.Join("log", dateString + ".txt")
