@@ -12,7 +12,7 @@ func ExecuteResource(resource resource.Resource) (string, error) {
 
 	switch resource.ResourceExtension {
 
-	case ".ps":
+	case ".ps1":
 		return ExecutePowershell(resource)
 
 	default:

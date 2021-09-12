@@ -8,7 +8,7 @@ import (
 )
 
 func FindResource(resourceName string) (Resource, error) {
-	resourcePath := filepath.Join("./routes/", resourceName)
+	resourcePath := filepath.Join("./routes/*/", resourceName)
 
 	if len(filepath.Ext(resourcePath)) < 1 {
 		resourcePath += ".*"
