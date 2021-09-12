@@ -1,4 +1,4 @@
-package main
+package subscriptrestserver
 
 import (
 	"io"
@@ -11,7 +11,7 @@ import (
 	"github.com/AtomJon/Subscript-REST-Server/handler"
 )
 
-func main() {
+func StartServer() {
 	dateString := time.Now().Local().Format("2006-01-02")
 
 	os.Mkdir("log", os.ModeDir);
