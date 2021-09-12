@@ -16,6 +16,8 @@ func main() {
 	log.Println(dateString);
 	os.Exit(0)
 
+	
+
 	os.Mkdir("log", os.ModeDir);
 	logPath := path.Join("log", dateString + ".txt")
 
