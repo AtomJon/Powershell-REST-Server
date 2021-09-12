@@ -2,6 +2,9 @@ package handler
 
 import (
 	"net/http"
+
+	"github.com/AtomJon/Powershell-REST-Server/executor"
+	"github.com/AtomJon/Powershell-REST-Server/resource"
 )
 
 type SubScriptHandler struct {
@@ -9,13 +12,6 @@ type SubScriptHandler struct {
 }
 
 func (SubScriptHandler) ServeHTTP(w http.ResponseWriter, request *http.Request) {
-	reqHandler := RequestHandler{w, *request, func(s string) (Resource, error) {return Resource{}, nil}, _ExecuteContent}
+	reqHandler := RequestHandler{w, *request, resource.FindResource, executor.ExecuteResource}
 	reqHandler.Handle()
-}
-
-
-
-func _ExecuteContent(resource Resource) (error, string) {
-
-	return nil, "Success";
 }

@@ -17,6 +17,6 @@ func (err ResourceNotUniqueError) Error() string {
 }
 
 type Resource struct {
-	Content           []byte
+	Content           string
 	ResourceExtension string
 }

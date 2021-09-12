@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func _FindResource(resourceName string) (Resource, error) {
+func FindResource(resourceName string) (Resource, error) {
 	resourcePath := filepath.Join("./routes/", resourceName)
 
 	if len(filepath.Ext(resourcePath)) < 1 {
@@ -16,24 +16,26 @@ func _FindResource(resourceName string) (Resource, error) {
 
 	matches, err := filepath.Glob(resourcePath)
 	if err != nil {
-		return _ReturnErrorWithString("Invalid pattern '%s':\n%e\n", resourcePath, err)
+		return _ReturnErrorWithString("invalid pattern '%s':\n%e\n", resourcePath, err)
 	}
 
 	if len(matches) < 1 {
-		return Resource{}, ResourceNotFoundError{fmt.Sprintf("Could not find resource %s\n", resourcePath)}
+		return Resource{}, ResourceNotFoundError{fmt.Sprintf("could not find resource %s\n", resourcePath)}
 	}
 
 	if len(matches) > 1 {
-		reply := fmt.Sprintf("Resource is not unique, specify between resources: %s", strings.Join(matches, ", "))
+		reply := fmt.Sprintf("resource is not unique, specify between resources: %s", strings.Join(matches, ", "))
 		return Resource{}, ResourceNotUniqueError{reply}
 	}
 
-	content, err := os.ReadFile(matches[0])
+	resourcePath = matches[0];
+
+	content, err := os.ReadFile(resourcePath)
 	if err != nil {
-		return _ReturnErrorWithString("Cannot read resource '%s':\n%v\n", resourcePath, err)
+		return _ReturnErrorWithString("cannot read resource '%s':\n%v\n", resourcePath, err)
 	}
 
-	return Resource{content, filepath.Ext(resourcePath)}, nil
+	return Resource{string(content), filepath.Ext(resourcePath)}, nil
 }
 
 func _ReturnErrorWithString(format string, a ...interface{}) (Resource, error) {

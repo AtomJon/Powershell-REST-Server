@@ -4,17 +4,19 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/AtomJon/Powershell-REST-Server/resource"
 )
 
-type FindResourceFunc func (string) (Resource, error)
-type ExecuteContentFunc func (Resource) (error, string)
+type FindResourceFunc func (string) (resource.Resource, error)
+type ExecuteResourceFunc func (resource.Resource) (string, error)
 
 type RequestHandler struct {
 	writer http.ResponseWriter
 	request http.Request
 
 	findResource FindResourceFunc
-	executeConent ExecuteContentFunc
+	executeResource ExecuteResourceFunc
 }
 
 func (handler RequestHandler) Handle() {
@@ -28,10 +30,10 @@ func (handler RequestHandler) Handle() {
 
 		switch err.(type) {
 
-		case ResourceNotFoundError:
+		case resource.ResourceNotFoundError:
 			handler.Reply(404, err.Error());
 
-		case ResourceNotUniqueError:
+		case resource.ResourceNotUniqueError:
 			handler.Reply(406, err.Error());
 
 		default:
@@ -40,8 +42,13 @@ func (handler RequestHandler) Handle() {
 		}
 
 	} else {
-		handler.executeConent(content);
-		// handler.Reply(200, string(content));
+		reply, err := handler.executeResource(content);
+		if (err != nil) {
+			log.Printf("Error while executing resource: %v", err)
+			handler.Reply(500, "Cannot execute resource. Try again");
+		} else {
+			handler.Reply(200, reply);
+		}
 	}
 }
 
