@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/AtomJon/Powershell-REST-Server/resource"
+	"github.com/AtomJon/Subscript-REST-Server/resource"
 )
 
 func ExecutePowershell(resource resource.Resource) (string, error) {

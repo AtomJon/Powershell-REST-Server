@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/AtomJon/Powershell-REST-Server/resource"
+	"github.com/AtomJon/Subscript-REST-Server/resource"
 )
 
 type FindResourceFunc func (string) (resource.Resource, error)

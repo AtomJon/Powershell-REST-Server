@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"github.com/AtomJon/Powershell-REST-Server/executor"
-	"github.com/AtomJon/Powershell-REST-Server/resource"
+	"github.com/AtomJon/Subscript-REST-Server/executor"
+	"github.com/AtomJon/Subscript-REST-Server/resource"
 )
 
 type SubScriptHandler struct {

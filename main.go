@@ -8,7 +8,7 @@ import (
 	"path"
 	"time"
 
-	"github.com/AtomJon/Powershell-REST-Server/handler"
+	"github.com/AtomJon/Subscript-REST-Server/handler"
 )
 
 func main() {
