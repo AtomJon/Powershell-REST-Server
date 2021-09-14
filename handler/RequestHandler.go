@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/AtomJon/Subscript-REST-Server/resource"
+	"github.com/AtomJon/subscriptrestserver/resource"
 )
 
 type FindResourceFunc func (string) (resource.Resource, error)

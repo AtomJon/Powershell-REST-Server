@@ -1,11 +1,11 @@
-module github.com/AtomJon/SubscriptRESTServer
+module github.com/AtomJon/subscriptrestserver
 
 go 1.17
 
-replace github.com/AtomJon/SubscriptRESTServer/handler => ./handler
+replace github.com/AtomJon/subscriptrestserver/handler => ./handler
 
-replace github.com/AtomJon/SubscriptRESTServer/resource => ./resource
+replace github.com/AtomJon/subscriptrestserver/resource => ./resource
 
-replace github.com/AtomJon/SubscriptRESTServer/executor => ./executor
+replace github.com/AtomJon/subscriptrestserver/executor => ./executor
 
 require github.com/mattn/go-zglob v0.0.3

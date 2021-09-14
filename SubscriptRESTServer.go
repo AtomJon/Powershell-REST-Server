@@ -8,7 +8,7 @@ import (
 	"path"
 	"time"
 
-	"github.com/AtomJon/Subscript-REST-Server/handler"
+	"github.com/AtomJon/subscriptrestserver/handler"
 )
 
 func StartServer() {

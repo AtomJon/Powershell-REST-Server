@@ -3,7 +3,7 @@ package executor
 import (
 	"log"
 
-	"github.com/AtomJon/Subscript-REST-Server/resource"
+	"github.com/AtomJon/subscriptrestserver/resource"
 )
 
 func ExecuteResource(resource resource.Resource) (string, error) {

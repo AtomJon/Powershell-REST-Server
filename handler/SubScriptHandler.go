@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"github.com/AtomJon/Subscript-REST-Server/executor"
-	"github.com/AtomJon/Subscript-REST-Server/resource"
+	"github.com/AtomJon/subscriptrestserver/executor"
+	"github.com/AtomJon/subscriptrestserver/resource"
 )
 
 type SubScriptHandler struct {
