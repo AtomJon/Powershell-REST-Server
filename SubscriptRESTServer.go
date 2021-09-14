@@ -11,7 +11,7 @@ import (
 	"github.com/AtomJon/subscriptrestserver/handler"
 )
 
-func StartServer() {
+func StartServer(addr string) {
 	dateString := time.Now().Local().Format("2006-01-02")
 
 	os.Mkdir("log", os.ModeDir);
@@ -29,7 +29,7 @@ func StartServer() {
 
 	_handler := handler.SubScriptHandler{};
 	
-	err = http.ListenAndServe(":3000", _handler);
+	err = http.ListenAndServe(addr, _handler);
 	if (err == nil) {
 		log.Fatal(err);
 	}
