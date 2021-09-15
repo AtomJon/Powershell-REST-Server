@@ -1,1 +1,0 @@
-echo "this is double1.ps"
