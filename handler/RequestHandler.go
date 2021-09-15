@@ -15,7 +15,7 @@ type RequestHandler struct {
 	writer http.ResponseWriter
 	request http.Request
 
-	findResource FindResourceFunc
+	resourceFinder resource.ResourceFinder
 	executeResource ExecuteResourceFunc
 }
 
@@ -24,7 +24,7 @@ func (handler RequestHandler) Handle() {
 
 	log.Println("Request: " + resourceName);
 	
-	content, err := handler.findResource(resourceName);
+	content, err := handler.resourceFinder.FindResource(resourceName);
 	if (err != nil) {
 		log.Printf("Error: %v\n", err);
 

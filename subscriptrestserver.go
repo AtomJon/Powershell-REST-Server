@@ -9,9 +9,10 @@ import (
 	"time"
 
 	"github.com/AtomJon/subscriptrestserver/handler"
+	"github.com/AtomJon/subscriptrestserver/resource"
 )
 
-func StartServer(addr string) {
+func StartServer(addr string, scriptsFolder string) {
 	dateString := time.Now().Local().Format("2006-01-02")
 
 	os.Mkdir("log", os.ModeDir);
@@ -27,7 +28,9 @@ func StartServer(addr string) {
 
 	log.Println("Starting listener");
 
-	_handler := handler.SubScriptHandler{};
+	_handler := handler.SubScriptHandler{
+		resource.DirectoryResourceFinder{scriptsFolder},
+	};
 	
 	err = http.ListenAndServe(addr, _handler);
 	if (err == nil) {

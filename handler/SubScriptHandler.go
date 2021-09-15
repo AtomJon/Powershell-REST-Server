@@ -8,10 +8,10 @@ import (
 )
 
 type SubScriptHandler struct {
-	http.Handler
+	ResourceFinder resource.ResourceFinder
 }
 
-func (SubScriptHandler) ServeHTTP(w http.ResponseWriter, request *http.Request) {
-	reqHandler := RequestHandler{w, *request, resource.FindResource, executor.ExecuteResource}
+func (handler SubScriptHandler) ServeHTTP(w http.ResponseWriter, request *http.Request) {
+	reqHandler := RequestHandler{w, *request, handler.ResourceFinder, executor.ExecuteResource}
 	reqHandler.Handle()
 }
