@@ -1,14 +1,10 @@
 package executor
 
 import (
-	"log"
-
 	"github.com/AtomJon/subscriptrestserver/resource"
 )
 
 func ExecuteResource(resource resource.Resource) (string, error) {
-
-	log.Printf("Executing resource: %v", resource)
 
 	switch resource.ResourceExtension {
 

@@ -12,19 +12,19 @@ type FindResourceFunc func (string) (resource.Resource, error)
 type ExecuteResourceFunc func (resource.Resource) (string, error)
 
 type RequestHandler struct {
-	writer http.ResponseWriter
-	request http.Request
+	Writer http.ResponseWriter
+	Request http.Request
 
-	resourceFinder resource.ResourceFinder
-	executeResource ExecuteResourceFunc
+	ResourceFinder resource.ResourceFinder
+	ExecuteResource ExecuteResourceFunc
 }
 
 func (handler RequestHandler) Handle() {
-	resourceName := handler.request.RequestURI;
+	resourceName := handler.Request.RequestURI;
 
 	log.Println("Request: " + resourceName);
 	
-	content, err := handler.resourceFinder.FindResource(resourceName);
+	content, err := handler.ResourceFinder.FindResource(resourceName);
 	if (err != nil) {
 		log.Printf("Error: %v\n", err);
 
@@ -42,7 +42,7 @@ func (handler RequestHandler) Handle() {
 		}
 
 	} else {
-		reply, err := handler.executeResource(content);
+		reply, err := handler.ExecuteResource(content);
 		if (err != nil) {
 			log.Printf("Error while executing resource: %v", err)
 			handler.Reply(500, "Cannot execute resource. Try again");
@@ -53,6 +53,6 @@ func (handler RequestHandler) Handle() {
 }
 
 func (handler RequestHandler) Reply(code int, s string) {
-	handler.writer.WriteHeader(code);
-	fmt.Fprint(handler.writer, s);
+	handler.Writer.WriteHeader(code);
+	fmt.Fprint(handler.Writer, s);
 }
