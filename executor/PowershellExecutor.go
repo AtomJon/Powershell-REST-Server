@@ -12,7 +12,7 @@ func ExecutePowershell(resource resource.Resource) (string, error) {
 
 	result, err := cmd.CombinedOutput();
 	if (err != nil) {
-		return "", fmt.Errorf("powershell:\n\tError Pipe: %s\n\tError: %v", string(result), err);
+		return "", fmt.Errorf("%s %v", string(result), err);
 	}
 
 	return string(result), nil;
