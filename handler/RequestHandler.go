@@ -44,8 +44,10 @@ func (handler RequestHandler) Handle() {
 	} else {
 		reply, err := handler.ExecuteResource(content);
 		if (err != nil) {
-			log.Printf("Error while executing resource: %v", err)
-			handler.Reply(500, "Cannot execute resource. Try again");
+			msg := fmt.Sprintf("Error while executing %v", err)
+			
+			log.Print(msg)
+			handler.Reply(500, msg);
 		} else {
 			handler.Reply(200, reply);
 		}
