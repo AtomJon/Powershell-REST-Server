@@ -1,7 +1,9 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 
@@ -9,7 +11,7 @@ import (
 )
 
 type FindResourceFunc func (string) (resource.Resource, error)
-type ExecuteResourceFunc func (resource.Resource) (string, error)
+type ExecuteResourceFunc func (resource.Resource, resource.ScriptExecutionRequest) (string, error)
 
 type RequestHandler struct {
 	Writer http.ResponseWriter
@@ -42,11 +44,28 @@ func (handler RequestHandler) Handle() {
 		}
 
 	} else {
-		reply, err := handler.ExecuteResource(content);
+
+		var executionRequest resource.ScriptExecutionRequest
+
+		if handler.Request.Method == http.MethodPost {
+
+			body, err := io.ReadAll(handler.Request.Body)
+			if (err != nil) {
+				log.Printf("Error while reading request body: %v", err)
+			}
+
+			err = json.Unmarshal(body, &executionRequest)
+
+			if (err != nil) {
+				log.Printf("Error while parsing request body: %v", err)
+			}
+		}
+
+		log.Printf("Executing script '%s', with parameters: '%v'", resourceName, executionRequest.Parameters)
+
+		reply, err := handler.ExecuteResource(content, executionRequest);
 		if (err != nil) {
-			msg := fmt.Sprintf("Error while executing resource: %v", err)
-			
-			log.Print(msg)
+			log.Printf("Error while executing resource: %v", err)
 			handler.Reply(500, err.Error());
 		} else {
 			handler.Reply(200, reply);

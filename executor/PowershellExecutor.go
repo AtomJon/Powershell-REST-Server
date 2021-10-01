@@ -3,12 +3,17 @@ package executor
 import (
 	"fmt"
 	"os/exec"
+	"strings"
 
 	"github.com/AtomJon/subscriptrestserver/resource"
 )
 
-func ExecutePowershell(resource resource.Resource) (string, error) {
-	cmd := exec.Command("powershell.exe", "-c", resource.Content);
+func ExecutePowershell(resource resource.Resource, request resource.ScriptExecutionRequest) (string, error) {
+	parsedRequest := parseRequestAsString(request)
+	
+	containedContent := fmt.Sprintf("& {%s}", resource.Content)
+
+	cmd := exec.Command("powershell.exe", "-Command", containedContent, parsedRequest);
 
 	result, err := cmd.CombinedOutput();
 	if (err != nil) {
@@ -16,4 +21,18 @@ func ExecutePowershell(resource resource.Resource) (string, error) {
 	}
 
 	return string(result), nil;
+}
+
+func parseRequestAsString(request resource.ScriptExecutionRequest) (string) {
+	builder := strings.Builder{}
+
+	for identifier, value := range(request.Parameters) {
+		builder.WriteRune('-')
+		builder.WriteString(identifier)
+		builder.WriteString(" \"")
+		builder.WriteString(value)
+		builder.WriteString("\" ")
+	}
+
+	return builder.String()
 }
