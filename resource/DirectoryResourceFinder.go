@@ -25,6 +25,8 @@ func (finder DirectoryResourceFinder) CreateOrModifyResource(resourceName string
 		return err
 	}
 
+	defer file.Close()
+
 	_, err = file.Write(contents)
 	return err
 }
@@ -56,7 +58,15 @@ func (finder DirectoryResourceFinder) DeleteResource(resourceName string) (error
 }
 
 func (finder DirectoryResourceFinder) FindResourcePath(resourceName string) (string, error) {
-	resourcePath := finder.Folder + "/**/" + resourceName[1:]
+	if (len(resourceName) < 1) {
+		return "", fmt.Errorf("no name for the resource was provided")
+	}
+
+	if (resourceName[0] == '/') {
+		resourceName = resourceName[1:]
+	}
+
+	resourcePath := finder.Folder + "/**/" + resourceName
 
 	if len(filepath.Ext(resourcePath)) < 1 {
 		resourcePath += ".*"

@@ -1,6 +1,6 @@
 package resource
 
 type ScriptExecutionRequest struct {
-	ScriptName string
+	Path       string
 	Parameters map[string]string
 }

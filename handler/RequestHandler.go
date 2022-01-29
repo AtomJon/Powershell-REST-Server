@@ -21,9 +21,7 @@ type HandlerReply struct {
 
 func (handler RequestHandler) Handle(executionRequest resource.ScriptExecutionRequest) HandlerReply {
 
-	resourceName := executionRequest.ScriptName
-
-	log.Println("Request: " + resourceName);
+	resourceName := executionRequest.Path
 	
 	content, err := handler.ResourceFinder.FindResource(resourceName);
 	if (err != nil) {
